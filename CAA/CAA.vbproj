@@ -11,9 +11,10 @@
     <AssemblyName>CAA</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,11 +49,25 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>DLLs\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>DLLs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -74,6 +89,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CAA_const_structure.vb" />
+    <Compile Include="CAA_General_Functions.vb" />
+    <Compile Include="CAA_JsonRW.vb" />
+    <Compile Include="CAA_USER.vb" />
+    <Compile Include="CAA_USR_UI.Designer.vb">
+      <DependentUpon>CAA_USR_UI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CAA_USR_UI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CAA_Weighting.vb" />
+    <Compile Include="CALA\CALA_Global.vb" />
+    <Compile Include="CALA\CALA_JsonRW.vb" />
+    <Compile Include="CALA\CALA_MathNet_GE_wRC.vb" />
+    <Compile Include="CALA\CALA_Matrix_Structure.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +114,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -98,6 +128,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CAA_USR_UI.resx">
+      <DependentUpon>CAA_USR_UI.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
@@ -131,6 +164,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="00_doc\Cadmus_information\go_out.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DLLs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="00_doc\icons\sg_logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -117,20 +117,39 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="CA-Orange" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\CA-Orange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cmdAssignFiles_Choose.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAhVJREFUWEft1s1LVFEYx/FbVopkpiEVWZEGISZCSNnCKKIW2aZaVAjuygoFyZeI
+        oBa1KlxE4MoWbVrUJo2EKFCK2tSqVaHSon+k79fx0slxGDtzEYL5wQfu3Hl77jnnPucm5fxv2YQNucPs
+        sx5d6EG9J5bF957gPvZ7Ius04wO+Y9ATQTrxCvcwhmfYi0xzFuM4j6eognHYH6IXddiOOxhAprmIm9iH
+        CdTANGAak3iJF3gLi9yIzJIW4FSEBTgSjso19C3x+CRcN5mlUAFrlnIBpRSwAx04hC2eiEkpBVzHL8zB
+        xRmVUgoYxRt8hL8TldgC1uERvD1tUHcRldgCNmMGV+Dwf4Wt/ASO4CDcO+yiFlswsQXUwi7pZlWJB/iB
+        BczDveUbXqMfO7FiwgJss2EB/slxnArsgdmK5ziw+CpJqnEYl3ADI3ADs53/xBRakJe0APeCx3Bo05zG
+        J7zHO3zGLVTANu0CdCGG30njsPsM4RbfDafLgvNG2AKGYO933sIHjwtwXi2uCe6ct+Fn3Zxc/V/QiGLx
+        6r2IM4uvgljAcO4wL16lQ5qmFX7Wrdot3IXn84Jb9WpyGfaOv1KsAL+Upg3OrcPrnzoyu+CUrCaO3Lbc
+        4Z/EFJBpygUUK8D306SLMNO041juMC/ehjaTc7AYb9fonl8oruhCz3hH4YOojUizuIo1i/e7t9nuwEpd
+        r5x/TJL8BvOHYmLoxUguAAAAAElFTkSuQmCC
+</value>
   </data>
-  <data name="fcu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\fcu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Go_out_Pri" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\Go_out_Pri.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="go_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\go_out.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sg_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\icons\sg_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cmdAssignFiles_Assign.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        wwAADsMBx2+oZAAAAu9JREFUWEft1leojnEcwPHH3nvPkGzJLlnhgpwLIyWRFZILm2yyQxJX9sreO3tn
+        C5lxQYpLbuRC8f0ez6vTyTnvS95/58KvPj3veHqe//79orwYhVDw58ewUQMjsQnr0AelkfbIh844jVvw
+        5dvxAmtQGWmNajiOq7Ahfq+OUXiDCSiAtEVFbMUj2JDL8XU8zuIgvCetURejMRYDsA1v4ZSchCMSNKbh
+        PZwCF2VJZA2nxN1SGMVRNuZnf9NfT1s5OOzn8Bi70BG9MBTTsRJO2w7sxtGYnx09F/FqOI390Bw2LqWo
+        AteBD1uIm7gRX90pvmAtVmEBZmAW5mE+ZmMRvMfGX8NdbEEH5EeuUQS23N6fwTFciq/2eCdsnFcb44N9
+        0eGYn71vI5bDZ42Da+khesOtn2sUha2diKVwOL3asyVYhsVwOiZnMQlT4MisgI15AHfVYBzCBdTDH0XS
+        YcshnPf2sAFXYCOfYDiSjsK/jJa4g81wcTt1JRAs3JbunNs4BRezJ27QGIRXcGF77DdC0MiAB5tT4HQ4
+        LUGjK17iPjxTmiJotMNTfMBFmH+CRjN4EH2DZ0EtBI3a8Cz4Dg+nJsgxGmAguqMFXDDOYV/4e3/0QGvU
+        RDEkC8u7vbABZlqf/StMrdaEtqoT9uE1XCyeXM/xDPfgHvZ/c8EBeLyuh8ewGbMx3OOWchXgixPp2+P7
+        Mz5hTvxbVAkzYSLxgaZiD4sTMAG5Z82G12GWNKnYAAtYF1IbDIEPNw3vgT21Yd7nd0fPcPQ+wkbYkTrI
+        PJctvRxSR8F0XB42zEoowZd5eMheVkX2KAXvdSTNAT3hirfaMurDDn3BOzil0VTY8989MFmYUExUDqVD
+        7cr25a3gVFrau/AscA3vtcOOwldYb0RtcQTm8LmwuLCoSIX3mnot360LHPL9sFraAKfE37ogEWbIMTgP
+        a9DMXjTECLiQrAFS5f2W7cPQDZZejkIZuDPMeE5L9vrQ7y7SoBnxf+TFiKIfL8Cxl9ymi8MAAAAASUVO
+        RK5CYII=
+</value>
   </data>
 </root>

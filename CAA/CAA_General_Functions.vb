@@ -1,6 +1,4 @@
-﻿
-
-''+++++++++++++++++++++++++oosyhdddddddddddmmmmmmmmNNNNNNNmdmmNNNNNNNNNNNNmddhyhddhdmmmmmmmmmmmmmdddhh
+﻿''+++++++++++++++++++++++++oosyhdddddddddddmmmmmmmmNNNNNNNmdmmNNNNNNNNNNNNmddhyhddhdmmmmmmmmmmmmmdddhh
 ''+++++++++++++++++++++osyhhddddddddmmmmmmmmmmmmmmNNNNNNNNNNNNNNNNNNNNNNNNNNmmddhddmmNNNNNNNNNNNNNNmmm
 ''++++++++++++++++++oyhddddddddddmmmmmmmmNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNmdddmmmNNNNNNNNNNNNNNNN
 ''+++++++++++++++ossyddddhhhdddddmmmmmmmmmmmmNNNNNNNNNNNNNNNNNNNNNNNNNNMMMMNNNNNmdmmmmmNNNNNNNNNNNNNNN
@@ -63,170 +61,60 @@
 ''hhhhyyyhhhyyyyyssyyyyyyho::+/        `./+:.              ``````...../hhhdddddddddddmmmmmmddddddddddd
 ''hhhyyyyyhyyyyyyyyyyyyyys+-:o+      `+syyyhh/`          `````.```.`.:yhhhhddddddddddddmmmdddddddddddd
 ''hhyyyyyyyyyyyyyyyyyyyyyoo//o/     .yyyhhhhhhs.        ``````.`..`.:yhhhhhhdhdddhddddddddddddddddddhh
-
-
-
-''`````````````````````````````````````````````````````````````````````.:/:.``````````````````````````
-''````````````````````````````````````````````````````````````.````.://-..````````````````````````````
-''```````````````````......``....................................:::...```````````````````````````````
-''````````````.`..............................................-::-............``..````````````````````
-''``````````................................................-/:-...........................```````````
-''```````................................................/o//-...............................```.`````
-''````...............................................:s-/s/-......................................````
-''..................................................:ho+/.............................................
-''..........................................-.--:s--sy+:-.............................................
-''.....................................-....----yo-+/------...........................................
-''..............................--.------------oo/o:-------...........................................
-''..............................---------------oy+------------..--....................................
-''..........................-------------------/:----------------------------------..--...............
-''......................-------------------ss-:+---------------------------------------------.........
-''...................---------------:y----:dy-+:-----------------------------------------------.......
-''...............-..---------------/sh:---/do:+--------------------------------------------------.....
-''..............------------:yy:--/s:+o---/m///----------------------------------------------------..-
-''............--------------o/+s:/s:-:y---/h:+:-------------------------------------------------------
-''............-------------o+--+ys:---y:-:yy/+--------------------------------------------------------
-''...........-------------/+---/do----+s/soy+:-:------------------------------------------------------
-''.........--------------:s:--/s/y/---:+o/:ss:-------::-----------------------------------------------
-''.......--------://:----o/--/s:-/y:-::--::sy:---::::::-----------------------------------------------
-''......--------o+:/s---:y--/s:---oo::--:::+s:::-:::::::-::----::-------------------------------------
-''......-------+o---+o:-o+-:y/----/y:::::::/s::::::::::::::::::::::::::::::::::::::-:::---------------
-''...----------y:----:-:y:--:++///os:::::::/h::::::::::::::::::::::::::::::::::::::::-:::-------------
-''...---------:y-------/s-----::///:-::::::/d::::::::::::::::::::::::::::::::::::::::::-:-------------
-''.-----------:y-------s/----::-:::::::::::/h+::::::::::::::::::::::::::::::::::::::::::::------------
-''------------/y------/s:--::::::-:::::::::/ss::::::::::::::::::::::::::::::::::::::::::::------------
-''------------:y:----:s+-:-:::::::::::::::::ss:::::::::::::::::::::::::::::::::::::::::::::::---------
-''------------:y/:--:+s:::::::::::::::::::::sy/:::::::::::::::::::::::::::::::::::::::::::::::--------
-''-------------+s:::/y:--:::::::::::::::::::oh+:::::::::::::::::::::::::::::::::::::::::::::----------
-''-------------:oo++s/--::::::::::::::::::::/hs::::::::::::::::::::::::::::::::::::::::::::::---------
-''---------------://:::-:::::::::::::::::::::sd::::::::::::::::::::::::::::::::::::::::::::-:---------
-''-----------:-:-::::::::::::::::::::::::::::/o::::::::::::::::::::::::::::::::::::::::::::::---------
-''------:---:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-----------
-''---------::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::-------------
-''-:----::::::::--::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::----------------
-'':::::::::::::-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::---------------
-
-
-
-
-' The ascii art
-'  pure text: https://patorjk.com/software/taag/#p=testall&f=Graffiti&t=test
-'  draw by yourself: https://kirilllive.github.io/ASCII_Art_Paint/ascii_paint.html
-'
-'
-'
-'
 Imports System.Threading
 Imports System.IO
 
-'Imports MathNet.Numerics.LinearAlgebra.Double
 
-Imports CAA
-
-
-Imports Microsoft.Office.Interop
-
-Public Class Form1
+Namespace CAA
+    Public Module CAA_General_Functions
 
 
-    Public USER As CAA.CAA_USER
-    Dim USERPATH As String
+        Public Function CheckFolderSurfix(pp As String) As String
+            If CheckFolderExisted(pp) > 0 Then
+
+                If Strings.Right(pp, 1) = "\" Then
+                    Return pp
+                Else
+                    Return pp + "\"
+                End If
+            Else
+                Return ""
+            End If
+        End Function
 
 
+        Public Function CheckFolderExisted(pp As String) As Integer
 
+            'Try
+            '    If IO.Directory.Exists(path) Then
+            '        Return 1
+            '    End If
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Dim x As Integer = CAA.CAA_const_structure.KeyWindowStartPosition.form1_x
+            'Catch ex As Exception
+            '    Try
+            '        IO.Directory.CreateDirectory(path)
+            '        Return 2
+            '    Catch ex2 As Exception
+            '        Return 0
+            '    End Try
 
-        Dim y As Integer = CAA.CAA_const_structure.KeyWindowStartPosition.form1_y
-        Me.Location = New Point(x, y)
-        lblCopyright.Text = CAA.CAA_const_structure.CAA_copyright.copywright
-        lblVersion.Text = My.Application.Info.Version.ToString
+            'End Try
+            If IO.Directory.Exists(pp) Then
+                Return 1
+            Else
+                Try
+                    IO.Directory.CreateDirectory(pp)
+                    Return 2
+                Catch ex As Exception
+                    Return 0
+                End Try
+            End If
+            Return 1
+        End Function
 
+        Public Function attachDateTimeSurfix() As String
+            Return Now.ToString("yyyyMMddHHmmss")
+        End Function
+    End Module
+End Namespace
 
-
-        initializeMe()
-
-    End Sub
-
-
-
-    Private Sub initializeMe()
-
-
-        ' use profile 
-        USER = New CAA.CAA_USER
-        USERPATH = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\" +
-                                 My.Application.Info.AssemblyName + "\"
-        ' the environment only work in form
-
-        USERPATH = CAA.CheckFolderSurfix(USERPATH)
-        USER.USER_file_folder = USERPATH
-
-        USER.readMe()
-
-
-
-
-
-
-
-
-    End Sub
-
-
-
-
-    Private Sub checkUSERProfile_Folder(pp As String)
-
-        If Not (IO.Directory.Exists(pp)) Then
-            IO.Directory.CreateDirectory(pp)
-        End If
-
-    End Sub
-
-
-
-#Region "UI"
-    Private Sub cmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
-        Call UnloadMe()
-    End Sub
-
-    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
-        Call UnloadMe()
-    End Sub
-
-    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        CAA_USR_UI.ShowDialog()
-
-    End Sub
-
-
-
-#End Region
-
-
-#Region "Form "
-
-
-
-    Private Sub UnloadMe()
-        Me.Close()
-    End Sub
-
-    Private Sub cmdStop_Click(sender As Object, e As EventArgs) Handles cmdStop.Click
-        Stop
-    End Sub
-
-
-
-
-
-
-
-#End Region
-
-
-
-
-
-End Class

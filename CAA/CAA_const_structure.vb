@@ -22,6 +22,10 @@ Namespace CAA
         End Structure
 
 
+        Public Structure CAA_const
+            Const CAA_profile_name As String = "CAA_USER.json"
+
+        End Structure
 
 
         Public Structure KeyWindowStartPosition
@@ -46,6 +50,9 @@ Namespace CAA
             'Const form91_x As Integer = 350
             'Const form91_y As Integer = 200
         End Structure
+
+
+
 
 
 
