@@ -120,7 +120,7 @@ Imports System.IO
 
 'Imports MathNet.Numerics.LinearAlgebra.Double
 
-Imports CAA
+Imports CAA.CAA
 
 
 Imports Microsoft.Office.Interop
@@ -129,6 +129,7 @@ Public Class Form1
 
 
     Public USER As CAA.CAA_USER
+    Public WEI() As CAA.CAA_WT
     Dim USERPATH As String
 
 
@@ -165,7 +166,23 @@ Public Class Form1
         USER.readMe()
 
 
+        'WEI
+        ReDim WEI(USER.WeightingFile_Title.Count - 1)
+        For ii As Integer = 0 To WEI.Count - 1
+            WEI(ii) = New CAA_WT
+            If USER.WeiFileExists_YesNo(ii) Then
+                WEI(ii).defineMefromFile(USER, ii)
+            End If
+        Next
 
+
+
+
+
+        '---
+        ' UI
+        '---
+        txtWorkDir.Text = USER.Current_Working_Folder
 
 
 
@@ -200,7 +217,12 @@ Public Class Form1
 
     End Sub
 
-
+    Private Sub WeightingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WeightingToolStripMenuItem.Click
+        CAA_Weighting_Modify_UI.ShowDialog()
+    End Sub
+    Private Sub cmdChangeWeighting_Click(sender As Object, e As EventArgs) Handles cmdChangeWeighting.Click
+        CAA_Weighting_Modify_UI.ShowDialog()
+    End Sub
 
 #End Region
 
@@ -223,9 +245,43 @@ Public Class Form1
 
 
 
+
 #End Region
 
 
+
+#Region "TEst"
+    Private Sub cmdtest_Click(sender As Object, e As EventArgs) Handles cmdtest.Click
+
+        'test read
+
+        'WEI(0).defineMefromFile(USER.Base_Data_Folder,
+        '                        0,
+        '                        USER.WeightingFile_Type(0),
+        '                        USER.WeightingFile_Title(0),
+        '                        USER.WeightingFile_Name(0))
+
+
+        'WEI(1).defineMefromFile(USER.Base_Data_Folder,
+        '                        1,
+        '                        USER.WeightingFile_Type(1),
+        '                        USER.WeightingFile_Title(1),
+        '                        USER.WeightingFile_Name(1))
+
+
+        'WEI(0).defineMefromFile(USER, 0)
+        'WEI(1).defineMefromFile(USER, 1)
+
+
+
+        'WEI(0).exportMe2File("Test.csv")
+    End Sub
+
+
+
+
+
+#End Region
 
 
 

@@ -117,29 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="sg_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\icons\sg_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="recongnize_sia1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\recongnize_sia.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="fcu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\fcu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CA-Orange" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\CA-Orange.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="go_out" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\go_out.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Go_out_Pri" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\Go_out_Pri.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="recongnize_sia" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\recongnize_sia.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="write_ss" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\00_doc\Cadmus_information\write_ss.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

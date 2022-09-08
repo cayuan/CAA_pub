@@ -42,13 +42,13 @@ Namespace CAA
             WeightingFile_Type(0) = CAA.CAA_Weighting_Format.two
 
 
-            WeightingFile_Title(1) = "MachineStatus"
+            WeightingFile_Title(1) = "MachineStatus_price"
             WeightingFile_Type(1) = CAA.CAA_Weighting_Format.three
 
             WeightingFile_Title(2) = "InventoryWei"
             WeightingFile_Type(2) = CAA.CAA_Weighting_Format.two
 
-            WeightingFile_Title(3) = "MachineStatus"
+            WeightingFile_Title(3) = "MachineStatus_cost"
             WeightingFile_Type(3) = CAA.CAA_Weighting_Format.three
 
             WeightingFile_Title(4) = "PreviousEarning"
@@ -75,10 +75,11 @@ Namespace CAA
 
             If IO.File.Exists(filename) Then
                 uu = read_json2obj(filename, New CAA_USER)
-                defineMefromObject(uu)
             Else
                 uu.generateDefaultUSERObject()
             End If
+
+            defineMefromObject(uu)
         End Sub
 
         Public Sub writeMe()
@@ -96,33 +97,22 @@ Namespace CAA
         End Function
 
 
-#Region "Read / Write to folder"
 
+        Public Function WeiFileExists_YesNo(ID As Integer) As Boolean
+            Dim fi As String = Me.Base_Data_Folder + Me.WeightingFile_Name(ID)
+            If IO.File.Exists(fi) Then
+                Return True
+            Else
+                Return False
+            End If
 
+        End Function
 
-
-
-
-#End Region
 
 
     End Class
 
     Public Module CAA_USER_Function
-        'Public Function readUSER(USER As CAA_USER) As CAA_USER
-        '    Dim filename As String = USER.USER_file_path + CAA_const_structure.CAA_const.CAA_profile_name
-        '    Dim uu As New CAA_USER
-        '    If IO.File.Exists(filename) Then
-
-        '        uu = read_json2obj(filename, New CAA_USER)
-        '    Else
-        '        uu = uu.generateDefaultUSERObject
-
-
-        '    End If
-        '    Return uu
-        'End Function
-
         Public Enum CAA_Weighting_Format
             one
             two

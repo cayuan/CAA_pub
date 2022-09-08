@@ -84,21 +84,6 @@ Namespace CAA
 
 
         Public Function CheckFolderExisted(pp As String) As Integer
-
-            'Try
-            '    If IO.Directory.Exists(path) Then
-            '        Return 1
-            '    End If
-
-            'Catch ex As Exception
-            '    Try
-            '        IO.Directory.CreateDirectory(path)
-            '        Return 2
-            '    Catch ex2 As Exception
-            '        Return 0
-            '    End Try
-
-            'End Try
             If IO.Directory.Exists(pp) Then
                 Return 1
             Else
@@ -115,6 +100,14 @@ Namespace CAA
         Public Function attachDateTimeSurfix() As String
             Return Now.ToString("yyyyMMddHHmmss")
         End Function
+
+
+        Public Enum OpenFileType
+            csv
+            json
+            other
+        End Enum
+
     End Module
 End Namespace
 

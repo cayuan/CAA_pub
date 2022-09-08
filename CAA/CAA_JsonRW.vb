@@ -63,6 +63,10 @@ Namespace CAA
                 Case GetType(CAA_USER)
                     Return JsonConvert.DeserializeObject(Of CAA_USER)(outS)
 
+                '? CAA_WT
+                Case GetType(CAA_WT)
+                    Return JsonConvert.DeserializeObject(Of CAA_WT)(outS)
+
 
 
                     '? Covariance general

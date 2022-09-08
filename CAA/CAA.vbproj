@@ -99,6 +99,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CAA_Weighting.vb" />
+    <Compile Include="CAA_Weighting_Modify_UI.Designer.vb">
+      <DependentUpon>CAA_Weighting_Modify_UI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CAA_Weighting_Modify_UI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CALA\CALA_Global.vb" />
     <Compile Include="CALA\CALA_JsonRW.vb" />
     <Compile Include="CALA\CALA_MathNet_GE_wRC.vb" />
@@ -130,6 +136,9 @@
   <ItemGroup>
     <EmbeddedResource Include="CAA_USR_UI.resx">
       <DependentUpon>CAA_USR_UI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CAA_Weighting_Modify_UI.resx">
+      <DependentUpon>CAA_Weighting_Modify_UI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
@@ -170,6 +179,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="00_doc\icons\sg_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="00_doc\Cadmus_information\recongnize_sia.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="00_doc\Cadmus_information\write_ss.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

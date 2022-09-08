@@ -27,9 +27,7 @@ Partial Class Form1
         Me.Label22 = New System.Windows.Forms.Label()
         Me.lblVersion = New System.Windows.Forms.Label()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.picStamp = New System.Windows.Forms.PictureBox()
         Me.lblCopyright = New System.Windows.Forms.Label()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.LinkLabel2 = New System.Windows.Forms.LinkLabel()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
@@ -44,26 +42,40 @@ Partial Class Form1
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.txtWorkDir = New System.Windows.Forms.TextBox()
         Me.cmdStop = New System.Windows.Forms.Button()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
-        Me.cmdExit = New System.Windows.Forms.Button()
         Me.txtOutput = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.cmdtest = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.cmdChangeDir = New System.Windows.Forms.Button()
+        Me.cmdFly = New System.Windows.Forms.Button()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.picStamp = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.cmdExit = New System.Windows.Forms.Button()
+        Me.WeightingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cmdChangeWeighting = New System.Windows.Forms.Button()
+        Me.Panel3 = New System.Windows.Forms.Panel()
         Me.GroupBox13.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
-        CType(Me.picStamp, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.picStamp, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox13
@@ -114,16 +126,6 @@ Partial Class Form1
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Author Contact Infomation"
         '
-        'picStamp
-        '
-        Me.picStamp.Image = Global.CAA.My.Resources.Resources.CA_Orange
-        Me.picStamp.Location = New System.Drawing.Point(280, 11)
-        Me.picStamp.Name = "picStamp"
-        Me.picStamp.Size = New System.Drawing.Size(50, 50)
-        Me.picStamp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.picStamp.TabIndex = 32
-        Me.picStamp.TabStop = False
-        '
         'lblCopyright
         '
         Me.lblCopyright.AutoSize = True
@@ -133,17 +135,6 @@ Partial Class Form1
         Me.lblCopyright.Size = New System.Drawing.Size(267, 15)
         Me.lblCopyright.TabIndex = 23
         Me.lblCopyright.Text = "Copyright © 2020,2021 Dr. Cadmus Yuan, All rights reserved. "
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.CAA.My.Resources.Resources.fcu
-        Me.PictureBox1.InitialImage = CType(resources.GetObject("PictureBox1.InitialImage"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(12, 18)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(149, 67)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.PictureBox1.TabIndex = 18
-        Me.PictureBox1.TabStop = False
         '
         'LinkLabel2
         '
@@ -229,6 +220,7 @@ Partial Class Form1
         '
         'EditToolStripMenuItem
         '
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.WeightingToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
         Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
         Me.EditToolStripMenuItem.Text = "Edit"
@@ -248,16 +240,6 @@ Partial Class Form1
         Me.GroupBox1.TabIndex = 36
         Me.GroupBox1.TabStop = False
         '
-        'PictureBox2
-        '
-        Me.PictureBox2.Image = Global.CAA.My.Resources.Resources.sg_logo
-        Me.PictureBox2.Location = New System.Drawing.Point(6, 12)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(73, 86)
-        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox2.TabIndex = 37
-        Me.PictureBox2.TabStop = False
-        '
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
@@ -271,6 +253,10 @@ Partial Class Form1
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.TabPage1.Controls.Add(Me.Panel3)
+        Me.TabPage1.Controls.Add(Me.cmdtest)
+        Me.TabPage1.Controls.Add(Me.Panel2)
+        Me.TabPage1.Controls.Add(Me.cmdFly)
         Me.TabPage1.Controls.Add(Me.cmdStop)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
         Me.TabPage1.Controls.Add(Me.GroupBox13)
@@ -281,6 +267,37 @@ Partial Class Form1
         Me.TabPage1.Size = New System.Drawing.Size(919, 551)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Devt"
+        '
+        'Panel2
+        '
+        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Panel2.Controls.Add(Me.Button1)
+        Me.Panel2.Controls.Add(Me.Label5)
+        Me.Panel2.Controls.Add(Me.cmdChangeDir)
+        Me.Panel2.Controls.Add(Me.txtWorkDir)
+        Me.Panel2.Location = New System.Drawing.Point(15, 69)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(380, 73)
+        Me.Panel2.TabIndex = 94
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(4, 6)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(86, 17)
+        Me.Label5.TabIndex = 93
+        Me.Label5.Text = "Working Dir:"
+        '
+        'txtWorkDir
+        '
+        Me.txtWorkDir.Font = New System.Drawing.Font("Calibri", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtWorkDir.Location = New System.Drawing.Point(3, 26)
+        Me.txtWorkDir.Multiline = True
+        Me.txtWorkDir.Name = "txtWorkDir"
+        Me.txtWorkDir.Size = New System.Drawing.Size(225, 41)
+        Me.txtWorkDir.TabIndex = 92
         '
         'cmdStop
         '
@@ -302,20 +319,6 @@ Partial Class Form1
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Info"
         '
-        'cmdExit
-        '
-        Me.cmdExit.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.cmdExit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdExit.Image = Global.CAA.My.Resources.Resources.go_out
-        Me.cmdExit.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.cmdExit.Location = New System.Drawing.Point(933, 542)
-        Me.cmdExit.Name = "cmdExit"
-        Me.cmdExit.Size = New System.Drawing.Size(66, 62)
-        Me.cmdExit.TabIndex = 34
-        Me.cmdExit.Text = "Exit"
-        Me.cmdExit.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdExit.UseVisualStyleBackColor = False
-        '
         'txtOutput
         '
         Me.txtOutput.Location = New System.Drawing.Point(3, 3)
@@ -332,6 +335,126 @@ Partial Class Form1
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(170, 487)
         Me.Panel1.TabIndex = 39
+        '
+        'cmdtest
+        '
+        Me.cmdtest.Location = New System.Drawing.Point(193, 301)
+        Me.cmdtest.Name = "cmdtest"
+        Me.cmdtest.Size = New System.Drawing.Size(75, 23)
+        Me.cmdtest.TabIndex = 95
+        Me.cmdtest.Text = "test"
+        Me.cmdtest.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.Button1.Font = New System.Drawing.Font("Calibri", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button1.Location = New System.Drawing.Point(303, 11)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(63, 56)
+        Me.Button1.TabIndex = 94
+        Me.Button1.Text = "Chg.Dir"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'cmdChangeDir
+        '
+        Me.cmdChangeDir.Font = New System.Drawing.Font("Calibri", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdChangeDir.Image = CType(resources.GetObject("cmdChangeDir.Image"), System.Drawing.Image)
+        Me.cmdChangeDir.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdChangeDir.Location = New System.Drawing.Point(234, 11)
+        Me.cmdChangeDir.Name = "cmdChangeDir"
+        Me.cmdChangeDir.Size = New System.Drawing.Size(63, 56)
+        Me.cmdChangeDir.TabIndex = 91
+        Me.cmdChangeDir.Text = "F. Chg.Dir"
+        Me.cmdChangeDir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdChangeDir.UseVisualStyleBackColor = True
+        '
+        'cmdFly
+        '
+        Me.cmdFly.Font = New System.Drawing.Font("Calibri", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdFly.Image = CType(resources.GetObject("cmdFly.Image"), System.Drawing.Image)
+        Me.cmdFly.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdFly.Location = New System.Drawing.Point(757, 386)
+        Me.cmdFly.Name = "cmdFly"
+        Me.cmdFly.Size = New System.Drawing.Size(72, 58)
+        Me.cmdFly.TabIndex = 80
+        Me.cmdFly.Text = "Fly!"
+        Me.cmdFly.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdFly.UseVisualStyleBackColor = True
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.Image = Global.CAA.My.Resources.Resources.sg_logo
+        Me.PictureBox2.Location = New System.Drawing.Point(6, 12)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(73, 86)
+        Me.PictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox2.TabIndex = 37
+        Me.PictureBox2.TabStop = False
+        '
+        'picStamp
+        '
+        Me.picStamp.Image = Global.CAA.My.Resources.Resources.CA_Orange
+        Me.picStamp.Location = New System.Drawing.Point(280, 11)
+        Me.picStamp.Name = "picStamp"
+        Me.picStamp.Size = New System.Drawing.Size(50, 50)
+        Me.picStamp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.picStamp.TabIndex = 32
+        Me.picStamp.TabStop = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.CAA.My.Resources.Resources.fcu
+        Me.PictureBox1.InitialImage = CType(resources.GetObject("PictureBox1.InitialImage"), System.Drawing.Image)
+        Me.PictureBox1.Location = New System.Drawing.Point(12, 18)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(149, 67)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox1.TabIndex = 18
+        Me.PictureBox1.TabStop = False
+        '
+        'cmdExit
+        '
+        Me.cmdExit.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.cmdExit.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdExit.Image = Global.CAA.My.Resources.Resources.go_out
+        Me.cmdExit.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdExit.Location = New System.Drawing.Point(933, 542)
+        Me.cmdExit.Name = "cmdExit"
+        Me.cmdExit.Size = New System.Drawing.Size(66, 62)
+        Me.cmdExit.TabIndex = 34
+        Me.cmdExit.Text = "Exit"
+        Me.cmdExit.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdExit.UseVisualStyleBackColor = False
+        '
+        'WeightingToolStripMenuItem
+        '
+        Me.WeightingToolStripMenuItem.Name = "WeightingToolStripMenuItem"
+        Me.WeightingToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.WeightingToolStripMenuItem.Text = "Weighting"
+        '
+        'cmdChangeWeighting
+        '
+        Me.cmdChangeWeighting.Image = CType(resources.GetObject("cmdChangeWeighting.Image"), System.Drawing.Image)
+        Me.cmdChangeWeighting.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdChangeWeighting.Location = New System.Drawing.Point(4, 7)
+        Me.cmdChangeWeighting.Name = "cmdChangeWeighting"
+        Me.cmdChangeWeighting.Size = New System.Drawing.Size(66, 62)
+        Me.cmdChangeWeighting.TabIndex = 96
+        Me.cmdChangeWeighting.Text = "Change Weighting"
+        Me.cmdChangeWeighting.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdChangeWeighting.UseVisualStyleBackColor = True
+        '
+        'Panel3
+        '
+        Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Panel3.Controls.Add(Me.cmdChangeWeighting)
+        Me.Panel3.Location = New System.Drawing.Point(401, 69)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(174, 73)
+        Me.Panel3.TabIndex = 95
         '
         'Form1
         '
@@ -350,17 +473,20 @@ Partial Class Form1
         Me.GroupBox13.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
-        CType(Me.picStamp, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.picStamp, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel3.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -396,4 +522,14 @@ Partial Class Form1
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents txtOutput As TextBox
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Label5 As Label
+    Friend WithEvents cmdChangeDir As Button
+    Friend WithEvents txtWorkDir As TextBox
+    Friend WithEvents cmdFly As Button
+    Friend WithEvents cmdtest As Button
+    Friend WithEvents WeightingToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents cmdChangeWeighting As Button
 End Class
