@@ -67,7 +67,17 @@ Namespace CAA
                 Case GetType(CAA_WT)
                     Return JsonConvert.DeserializeObject(Of CAA_WT)(outS)
 
+                '? CAA.ORDER
+                Case GetType(CAA.ORDER)
+                    Return JsonConvert.DeserializeObject(Of CAA.ORDER)(outS)
 
+                '? CAA.CAA_ORDER
+                Case GetType(CAA.CAA_ORDER)
+                    Return JsonConvert.DeserializeObject(Of CAA.CAA_ORDER)(outS)
+
+                '? CAA_ARTCO
+                Case GetType(CAA.CAA_ARTCO)
+                    Return JsonConvert.DeserializeObject(Of CAA.CAA_ARTCO)(outS)
 
                     '? Covariance general
                     'Case GetType(CALA_Covariance_output_format)

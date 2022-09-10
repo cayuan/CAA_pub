@@ -172,16 +172,17 @@ Namespace CAA
 
             Dim cond() As Double
             Dim wei As Double
+            Dim ty As Integer = 0
 
             Select Case Me.WeiType
                 Case CAA_Weighting_Format.one
-                    ReDim cond(0)
+                    ty = 0
                 Case CAA_Weighting_Format.two
-                    ReDim cond(1)
+                    ty = 1
                 Case CAA_Weighting_Format.three
-                    ReDim cond(2)
+                    ty = 2
                 Case Else
-                    ReDim cond(1)
+                    ty = 1
             End Select
 
 
@@ -208,8 +209,8 @@ Namespace CAA
             Do Until (rl Is Nothing)
                 Dim sp() As String = Split(rl, ",")
 
-
-                For ii As Integer = 1 To cond.Count  'because the first is an index
+                ReDim cond(ty)
+                For ii As Integer = 1 To ty + 1  'because the first is an index
                     cond(ii - 1) = CDbl(sp(ii))
                 Next
 
@@ -282,7 +283,11 @@ Namespace CAA
 
             Return 1
         End Function
-        Public Function exportMe2File(fileName As String)
+
+        Public Function exportMe2File() As Integer
+            Return exportMe2File(Me.FileName)
+        End Function
+        Public Function exportMe2File(fileName As String) As Integer
             Dim fi As String = Me.BaseFolder + fileName
             If IO.File.Exists(fi) Then
                 Try
@@ -343,6 +348,43 @@ Namespace CAA
 
         Public Function exportMe2IntendedString() As String
             Return write_obj2json_IndentedString(Me)
+        End Function
+
+
+        Public Function getDatafromDGV(dgv As DataGridView) As Integer
+            If dgv.Rows.Count < 0 Then Return 0
+
+            Dim cond() As Double : Dim w As Double
+            Dim ty As Integer
+            Select Case Me.WeiType
+                Case CAA_Weighting_Format.one
+                    ty = 0
+                Case CAA_Weighting_Format.two
+                    ty = 1
+                Case CAA_Weighting_Format.three
+                    ty = 2
+                Case Else
+                    ty = 1
+            End Select
+
+            Me.lstCondition = New List(Of Double())
+            Me.lstWei = New List(Of Double)
+
+
+
+
+            For ii As Integer = 0 To dgv.Rows.Count - 2
+
+                ReDim cond(ty)
+                For jj As Integer = 1 To ty + 1
+                    cond(jj - 1) = CDbl(dgv.Rows(ii).Cells(jj).Value)
+                Next
+                lstCondition.Add(cond)
+                w = CDbl(dgv.Rows(ii).Cells(cond.Count + 1).Value)
+                lstWei.Add(w)
+            Next
+
+            Return 1
         End Function
 
 

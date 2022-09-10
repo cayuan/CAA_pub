@@ -22,8 +22,8 @@ Partial Class CAA_Weighting_Modify_UI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.cmdUSERRead = New System.Windows.Forms.Button()
-        Me.cmdUSERSave = New System.Windows.Forms.Button()
+        Me.cmdweightingRead = New System.Windows.Forms.Button()
+        Me.cmdWeightingSave = New System.Windows.Forms.Button()
         Me.cmdExit = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -38,35 +38,35 @@ Partial Class CAA_Weighting_Modify_UI
         CType(Me.dgWei, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'cmdUSERRead
+        'cmdweightingRead
         '
-        Me.cmdUSERRead.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.cmdUSERRead.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdUSERRead.Image = Global.CAA.My.Resources.Resources.recongnize_sia1
-        Me.cmdUSERRead.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.cmdUSERRead.Location = New System.Drawing.Point(590, 290)
-        Me.cmdUSERRead.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.cmdUSERRead.Name = "cmdUSERRead"
-        Me.cmdUSERRead.Size = New System.Drawing.Size(70, 69)
-        Me.cmdUSERRead.TabIndex = 41
-        Me.cmdUSERRead.Text = "Read"
-        Me.cmdUSERRead.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdUSERRead.UseVisualStyleBackColor = False
+        Me.cmdweightingRead.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.cmdweightingRead.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdweightingRead.Image = Global.CAA.My.Resources.Resources.recongnize_sia1
+        Me.cmdweightingRead.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdweightingRead.Location = New System.Drawing.Point(590, 290)
+        Me.cmdweightingRead.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.cmdweightingRead.Name = "cmdweightingRead"
+        Me.cmdweightingRead.Size = New System.Drawing.Size(70, 69)
+        Me.cmdweightingRead.TabIndex = 41
+        Me.cmdweightingRead.Text = "Read"
+        Me.cmdweightingRead.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdweightingRead.UseVisualStyleBackColor = False
         '
-        'cmdUSERSave
+        'cmdWeightingSave
         '
-        Me.cmdUSERSave.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.cmdUSERSave.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdUSERSave.Image = Global.CAA.My.Resources.Resources.write_ss
-        Me.cmdUSERSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.cmdUSERSave.Location = New System.Drawing.Point(590, 204)
-        Me.cmdUSERSave.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
-        Me.cmdUSERSave.Name = "cmdUSERSave"
-        Me.cmdUSERSave.Size = New System.Drawing.Size(70, 66)
-        Me.cmdUSERSave.TabIndex = 40
-        Me.cmdUSERSave.Text = "Save"
-        Me.cmdUSERSave.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdUSERSave.UseVisualStyleBackColor = False
+        Me.cmdWeightingSave.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.cmdWeightingSave.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdWeightingSave.Image = Global.CAA.My.Resources.Resources.write_ss
+        Me.cmdWeightingSave.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.cmdWeightingSave.Location = New System.Drawing.Point(590, 204)
+        Me.cmdWeightingSave.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
+        Me.cmdWeightingSave.Name = "cmdWeightingSave"
+        Me.cmdWeightingSave.Size = New System.Drawing.Size(70, 66)
+        Me.cmdWeightingSave.TabIndex = 40
+        Me.cmdWeightingSave.Text = "Save"
+        Me.cmdWeightingSave.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdWeightingSave.UseVisualStyleBackColor = False
         '
         'cmdExit
         '
@@ -163,10 +163,10 @@ Partial Class CAA_Weighting_Modify_UI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(686, 461)
+        Me.ClientSize = New System.Drawing.Size(672, 461)
         Me.Controls.Add(Me.TabControl1)
-        Me.Controls.Add(Me.cmdUSERRead)
-        Me.Controls.Add(Me.cmdUSERSave)
+        Me.Controls.Add(Me.cmdweightingRead)
+        Me.Controls.Add(Me.cmdWeightingSave)
         Me.Controls.Add(Me.cmdExit)
         Me.Font = New System.Drawing.Font("Calibri", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Margin = New System.Windows.Forms.Padding(4, 3, 4, 3)
@@ -181,8 +181,8 @@ Partial Class CAA_Weighting_Modify_UI
 
     End Sub
 
-    Friend WithEvents cmdUSERRead As Button
-    Friend WithEvents cmdUSERSave As Button
+    Friend WithEvents cmdweightingRead As Button
+    Friend WithEvents cmdWeightingSave As Button
     Friend WithEvents cmdExit As Button
     Friend WithEvents TabControl1 As TabControl
     Friend WithEvents TabPage1 As TabPage

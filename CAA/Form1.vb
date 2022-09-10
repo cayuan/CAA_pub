@@ -133,6 +133,29 @@ Public Class Form1
     Dim USERPATH As String
 
 
+    Public ORDER As CAA.CAA_ORDER
+    Public ARTCO As CAA.CAA_ARTCO
+
+
+
+#Region "Delegation"
+    Public Delegate Sub txt_Delegate(ByVal txt As String)
+    Public Sub Addtxt_2_txtText(ByVal txt As String)
+        If Me.InvokeRequired Then
+            Dim d As New txt_Delegate(AddressOf Addtxt_2_txtText)
+            Me.Invoke(d, New Object() {txt})
+        Else
+            txtOutput.AppendText(txt & Environment.NewLine)
+        End If
+    End Sub
+
+
+
+#End Region
+
+
+
+#Region "Form load"
 
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -177,7 +200,11 @@ Public Class Form1
 
 
 
+        'ORDER
+        ORDER = New CAA_ORDER
 
+        'ARTCO
+        ARTCO = New CAA_ARTCO
 
         '---
         ' UI
@@ -191,8 +218,6 @@ Public Class Form1
     End Sub
 
 
-
-
     Private Sub checkUSERProfile_Folder(pp As String)
 
         If Not (IO.Directory.Exists(pp)) Then
@@ -200,6 +225,10 @@ Public Class Form1
         End If
 
     End Sub
+
+
+#End Region
+
 
 
 
@@ -224,6 +253,52 @@ Public Class Form1
         CAA_Weighting_Modify_UI.ShowDialog()
     End Sub
 
+    Private Function folderselection() As String
+        FolderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer
+
+        FolderBrowserDialog1.ShowDialog()
+
+        Dim folderpath As String = FolderBrowserDialog1.SelectedPath
+
+        If IO.Directory.Exists(folderpath) Then
+            Return CheckFolderSurfix(folderpath)
+        Else
+            Return Nothing
+        End If
+
+    End Function
+    Private Function read_output_return_full_path(Typ As OpenFileType, Optional workdir As String = "C:\Temp",
+                                                        Optional fileDescription As String = "") As String
+
+        Dim filter_string As String
+        Select Case Typ
+            Case OpenFileType.csv
+                filter_string = "csv files (*.csv)|*.csv|All files (*.*)|*.*"
+            Case OpenFileType.json
+                filter_string = "json files (*.json)|*.json|All files (*.*)|*.*"
+            Case Else
+                filter_string = "All files (*.*)|*.*"
+        End Select
+
+
+        '? open a file dialog 
+        With OpenFileDialog1
+            .Multiselect = False
+            .CheckFileExists = True
+            .ReadOnlyChecked = True
+            .InitialDirectory = workdir
+            .Filter = filter_string
+            .Title = fileDescription
+            .ShowDialog()
+        End With
+
+        Dim outname As String = ""
+
+        If IO.File.Exists(OpenFileDialog1.FileName) Then
+            outname = OpenFileDialog1.FileName
+        End If
+        Return outname
+    End Function
 #End Region
 
 
@@ -241,13 +316,101 @@ Public Class Form1
 
 
 
+#End Region
+
+
+#Region "working Folder"
+    Private Function assignTargetFolder_direct() As String
+        Dim Message, Title As String
+        Message = "Direct input the target folder "    ' Set prompt.
+        Title = "Folder Path"    ' Set title.
+
+        ' Display message, title, and default value.
+        Dim folderpath As String = InputBox(Message, Title, "")
+
+        If IO.Directory.Exists(folderpath) Then
+            Return CheckFolderSurfix(folderpath)
+
+        Else
+            Return Nothing
+        End If
+    End Function
 
 
 
+    Private Sub cmdChangeDir_Click(sender As Object, e As EventArgs) Handles cmdChangeDir.Click
+        Dim folderp As String = assignTargetFolder_direct()
+        If folderp <> "" Then
+            USER.Current_Working_Folder = folderp
+            txtWorkDir.Text = folderp
+            USER.writeMe()
+            Addtxt_2_txtText("Folder changed." + vbNewLine)
+        End If
+    End Sub
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim folderp As String = folderselection()
+        If folderp <> "" Then
+            USER.Current_Working_Folder = folderp
+            txtWorkDir.Text = folderp
+            USER.writeMe()
+        End If
+    End Sub
 
 
 #End Region
 
+#Region "ORDER"
+
+
+
+    Private Sub cmdARTCO_Click(sender As Object, e As EventArgs) Handles cmdARTCO.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        Dim fi As String = read_output_return_full_path(OpenFileType.csv,
+                                                        USER.Current_Working_Folder,
+                                                        "Open ORDER ORIGINAL CSV")
+
+        If ARTCO.defineMEFromCSV(USER.Current_Working_Folder,
+                                 IO.Path.GetFileName(fi)) = 1 Then
+            Addtxt_2_txtText("ART-CO read from file: " + IO.Path.GetFileName(fi) + ".")
+            Addtxt_2_txtText("ART-CO count= " + ARTCO.lstARTCO.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+
+    End Sub
+
+
+
+
+    Private Sub cmdGetOrder_Click(sender As Object, e As EventArgs) Handles cmdGetOrder.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If ARTCO.lstARTCO.Count = 0 Then
+            MsgBox("Define ART-CO before start. ")
+            Exit Sub
+        End If
+
+        Dim fi As String = read_output_return_full_path(OpenFileType.csv,
+                                                        USER.Current_Working_Folder,
+                                                        "Open ORDER ORIGINAL CSV")
+        If ORDER.defineMeFromORIGINALCSV(USER.Current_Working_Folder,
+                                      IO.Path.GetFileName(fi),
+                                      ARTCO) = 1 Then
+            Addtxt_2_txtText("ORDER read from file: " + IO.Path.GetFileName(fi) + ".")
+            Addtxt_2_txtText("ORDER count= " + ORDER.lstORD.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+
+    End Sub
+#End Region
 
 
 #Region "TEst"
@@ -276,6 +439,7 @@ Public Class Form1
 
         'WEI(0).exportMe2File("Test.csv")
     End Sub
+
 
 
 

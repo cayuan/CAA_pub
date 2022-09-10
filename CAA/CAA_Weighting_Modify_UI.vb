@@ -128,7 +128,11 @@
 
     Private Sub cboWeiType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboWeiType.SelectedIndexChanged
         CleardgWei()
+        Call displayWei_no_clear()
 
+    End Sub
+
+    Private Sub displayWei_no_clear()
         Dim wt As CAA.CAA_WT = Form1.WEI(cboWeiType.SelectedIndex)
 
         For ii As Integer = 0 To wt.lstCondition.Count - 1
@@ -142,5 +146,29 @@
     End Sub
 #End Region
 
+
+#Region "file i/o"
+    Private Sub cmdWeightingSave_Click(sender As Object, e As EventArgs) Handles cmdWeightingSave.Click
+
+        With Form1.WEI(cboWeiType.SelectedIndex)
+            'get the info from the UI the form1.WEI
+            .getDatafromDGV(dgWei)
+
+            ' save WEI
+            .exportMe2File()
+        End With
+
+    End Sub
+
+    Private Sub cmdweightingRead_Click(sender As Object, e As EventArgs) Handles cmdweightingRead.Click
+        Dim ids As Integer = cboWeiType.SelectedIndex
+        Form1.WEI(ids).defineMefromFile(Form1.USER, ids)
+
+        CleardgWei()
+        Call displayWei_no_clear()
+    End Sub
+
+
+#End Region
 
 End Class

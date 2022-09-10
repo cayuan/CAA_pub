@@ -91,6 +91,8 @@
     <Compile Include="CAA_const_structure.vb" />
     <Compile Include="CAA_General_Functions.vb" />
     <Compile Include="CAA_JsonRW.vb" />
+    <Compile Include="CAA_Order_and_PriceBook.vb" />
+    <Compile Include="CAA_ProductSpec.vb" />
     <Compile Include="CAA_USER.vb" />
     <Compile Include="CAA_USR_UI.Designer.vb">
       <DependentUpon>CAA_USR_UI.vb</DependentUpon>
@@ -132,6 +134,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SystemTimeDate\System_Date_Time_convert.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CAA_USR_UI.resx">

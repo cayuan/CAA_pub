@@ -25,6 +25,11 @@ Namespace CAA
         Public Structure CAA_const
             Const CAA_profile_name As String = "CAA_USER.json"
 
+
+            Const CAA_ORDER_Clearn_file As String = "CAA_ORDER_Clean"
+            Const CAA_ART_CO_file As String = "CAA_ART_CO"
+
+
         End Structure
 
 
