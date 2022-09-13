@@ -90,7 +90,9 @@
   <ItemGroup>
     <Compile Include="CAA_const_structure.vb" />
     <Compile Include="CAA_General_Functions.vb" />
+    <Compile Include="CAA_Inventory.vb" />
     <Compile Include="CAA_JsonRW.vb" />
+    <Compile Include="CAA_MachineStatus.vb" />
     <Compile Include="CAA_Order_and_PriceBook.vb" />
     <Compile Include="CAA_ProductSpec.vb" />
     <Compile Include="CAA_USER.vb" />
@@ -188,6 +190,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="00_doc\Cadmus_information\write_ss.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="00_doc\icons\green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="00_doc\icons\red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="00_doc\Cadmus_information\repeat_wHm.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -128,6 +128,10 @@ Namespace CAA
 
     Public Class CAA_ARTCO
         Public lstARTCO As List(Of ARTCO)
+        Public filename As String
+        Public workdir As String
+        Public exportedFileName As String
+
 
         Sub New()
             lstARTCO = New List(Of ARTCO)
@@ -149,6 +153,8 @@ Namespace CAA
 
         Public Function defineMEFromCSV(workDir As String, Filename As String) As Integer
             If Not (IO.File.Exists(workDir + Filename)) Then Return 0
+            Me.workdir = workDir
+            Me.filename = Filename
             Return readCSVandImport2ME(workDir + Filename)
         End Function
 
@@ -160,12 +166,28 @@ Namespace CAA
             Return 1
         End Function
 
+        Public Function exportME2CSV() As Integer
+            If workdir = "" Then
+                Return 0
+            End If
 
+            Return exportME2CSV(workdir)
+
+
+        End Function
         Public Function exportME2CSV(workDir As String) As Integer
             'CAA_ART_CO
-            Dim fi As String = workDir + CAA_const.CAA_ART_CO_file + "_" + attachDateTimeSurfix() + ".csv"
+            'Dim fi As String = workDir + CAA_const.CAA_ART_CO_file + "_" + attachDateTimeSurfix() + ".csv"
+
+            Dim sp() As String = Split(filename, ".")
+            Dim newfile As String = sp(0) + "_" + attachDateTimeSurfix() + "." + sp(1)
+            Dim fi As String = workDir + newfile
+
+
+
             Dim rl As String = ""
             Dim fw As New IO.StreamWriter(fi)
+
 
 
             rl = IO.Path.GetFileName(fi)
@@ -174,9 +196,13 @@ Namespace CAA
             fw.WriteLine(rl)
 
             For ii As Integer = 0 To lstARTCO.Count - 1
-                rl = "," + lstARTCO(ii).ART + "," + lstARTCO(ii).CO
+                rl = ii.ToString + "," + lstARTCO(ii).ART + "," + lstARTCO(ii).CO
                 fw.WriteLine(rl)
             Next
+
+
+            Me.exportedFileName = newfile
+
 
             fw.Flush()
             fw.Close()
@@ -220,8 +246,8 @@ Namespace CAA
             For line As Integer = 0 To lstLINE.Count - 1
                 Dim ARTCO As New ARTCO
                 Dim sp() As String = Split(lstLINE(line), ",")
-                ARTCO.ART = sp(1)
-                ARTCO.CO = sp(2)
+                ARTCO.ART = sp(1).Trim
+                ARTCO.CO = sp(2).Trim
 
                 If lstARTCO.Count = 0 Then
                     lstARTCO.Add(ARTCO)
@@ -268,6 +294,29 @@ Namespace CAA
 
     End Class
 
+
+
+    Public Class SZ_forPrint
+        Public SZ() As Integer
+
+        Sub New()
+            ReDim SZ(25)
+            '0-25
+            '1-13.5
+
+        End Sub
+
+        Public Function ToString_format() As String
+            Dim s As String = ""
+            For ii As Integer = 0 To SZ.Count - 1
+                s += SZ(ii).ToString + ","
+            Next
+
+            Return Strings.Left(s, s.Length - 1)
+        End Function
+
+
+    End Class
 
 
 End Namespace

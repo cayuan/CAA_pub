@@ -84,6 +84,23 @@ Public Class CAA_USR_UI
                 dgWeiFile.Rows(ii).Cells(3).Value = .WeightingFile_Name(ii).ToString
             Next
 
+
+            clearPB_CR()
+
+
+
+            For ii As Integer = 0 To .PriceBookWeighting.Count - 1
+                dgvPriceBook.Rows.Add()
+                dgvPriceBook.Rows(ii).Cells(0).Value = ii.ToString
+                dgvPriceBook.Rows(ii).Cells(1).Value = .PriceBookWeighting(ii).ToString
+            Next
+
+            For ii As Integer = 0 To .CostReportWeighting.Count - 1
+                dgvCostReport.Rows.Add()
+                dgvCostReport.Rows(ii).Cells(0).Value = ii.ToString
+                dgvCostReport.Rows(ii).Cells(1).Value = .CostReportWeighting(ii).ToString
+            Next
+
         End With
     End Sub
 
@@ -114,6 +131,39 @@ Public Class CAA_USR_UI
 
     End Sub
 
+    Private Sub clearPB_CR()
+        dgvPriceBook.Columns.Clear()
+        dgvPriceBook.Enabled = True
+        Dim width As Double = dgvPriceBook.Width / (2) - 5
+        With dgvPriceBook
+            .ColumnCount = 2
+            .ColumnHeadersVisible = True
+            .RowHeadersWidth = 4
+
+            .Columns(0).Name = "ID"
+            .Columns(0).Width = width * 0.8
+
+            .Columns(1).Name = "Weighting"
+            .Columns(1).Width = width
+        End With
+
+        dgvCostReport.Columns.Clear()
+        dgvCostReport.Enabled = True
+
+        With dgvCostReport
+            .ColumnCount = 2
+            .ColumnHeadersVisible = True
+            .RowHeadersWidth = 4
+
+            .Columns(0).Name = "ID"
+            .Columns(0).Width = width * 0.8
+
+            .Columns(1).Name = "Weighting"
+            .Columns(1).Width = width
+        End With
+
+
+    End Sub
 
     Private Sub getUI2USER()
         With Form1.USER
@@ -122,6 +172,19 @@ Public Class CAA_USR_UI
 
             For ii As Integer = 0 To .WeightingFile_Title.Count - 1
                 .WeightingFile_Name(ii) = dgWeiFile.Rows(ii).Cells(3).Value.ToString
+            Next
+
+
+            For ii As Integer = 0 To dgvPriceBook.Rows.Count - 2
+                If ii <= .PriceBookWeighting.Count - 1 Then
+                    .PriceBookWeighting(ii) = CDbl(Trim(dgvPriceBook.Rows(ii).Cells(1).Value))
+                End If
+            Next
+
+            For ii As Integer = 0 To dgvCostReport.Rows.Count - 2
+                If ii <= .CostReportWeighting.Count - 1 Then
+                    .CostReportWeighting(ii) = CDbl(Trim(dgvCostReport.Rows(ii).Cells(1).Value))
+                End If
             Next
         End With
     End Sub

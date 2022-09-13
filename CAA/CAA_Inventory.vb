@@ -1,27 +1,19 @@
 ﻿
-'? This class based on the CAA_ProductSpec.vb
-' _____            _       _   _             _____   _                          _____   _____    ______    _____ 
-'|  __ \          | |     | | (_)           / ____| | |                        / ____| |  __ \  |  ____|  / ____|
-'| |__) |  _   _  | |__   | |  _    ___    | |      | |   __ _   ___   ___    | (___   | |__) | | |__    | |     
-'|  ___/  | | | | | '_ \  | | | |  / __|   | |      | |  / _` | / __| / __|    \___ \  |  ___/  |  __|   | |     
-'| |      | |_| | | |_) | | | | | | (__    | |____  | | | (_| | \__ \ \__ \    ____) | | |      | |____  | |____ 
-'|_|       \__,_| |_.__/  |_| |_|  \___|    \_____| |_|  \__,_| |___/ |___/   |_____/  |_|      |______|  \_____
 
-'https://patorjk.com/software/taag/#p=testall&h=3&v=1&f=Big&t=Type%20Something%20
-
-
+Imports CAA.CAA
 
 
 Namespace CAA
 
-#Region "ORDER"
+
+#Region "INV"
 
 
-    Public Class ORDER
+    Public Class INVENTORY
 
         Public SP As CAA.SPEC
         Public VE As Integer
-        Public DD As String
+
 
         'make use of 
         '  Public Function convertTimeSpanInDays(STime As String, ETime As String) As Long
@@ -32,14 +24,14 @@ Namespace CAA
         End Sub
 
         Public Sub defineMeFromIntendedString(orS As String)
-            Dim o As ORDER = convert_jsonString2Obj(orS, New ORDER)
+            Dim o As INVENTORY = convert_jsonString2Obj(orS, New INVENTORY)
             defineMeFromObject(o)
         End Sub
 
-        Public Sub defineMeFromObject(o As ORDER)
+        Public Sub defineMeFromObject(o As INVENTORY)
             Me.SP.defineMeFromObject(o.SP)
             Me.VE = o.VE
-            Me.DD = o.DD
+
         End Sub
 
         Public Function exportMe2IntendedString() As String
@@ -48,18 +40,12 @@ Namespace CAA
 
         Public Function exportMe2String() As String
             'fw.WriteLine(",ART, MJ,SZ,CO,VE,DD")
-            Return Me.SP.exportMe2String + "," + Me.VE.ToString + "," + Me.DD
+            Return Me.SP.exportMe2String + "," + Me.VE.ToString
         End Function
 
 
-        Public Function compareORDER2ME(o As ORDER) As Boolean
+        Public Function compareORDER2ME(o As INVENTORY) As Boolean
             Dim Same As Boolean = True
-
-
-            If Me.DD <> o.DD Then
-                Return False
-            End If
-
             If Me.VE <> o.VE Then
                 Return False
             End If
@@ -84,24 +70,25 @@ Namespace CAA
 
 #End Region
 
-    '===
 
-#Region "ORDERS (Order set)"
 
-    Public Class CAA_ORDER
-        Public lstORD As List(Of ORDER)
+#Region "INVENTORY (Order set)"
+
+    Public Class CAA_INVENTORY
+        Public lstINV As List(Of INVENTORY)
         Public workDir As String
         Public myName As String
         Public originalFileName As String
         Public saveTime As String
+
         Public exportedFileName As String
 
         Sub New()
-            lstORD = New List(Of [ORDER])
+            lstINV = New List(Of INVENTORY)
         End Sub
 
 
-        Public Sub defineMeFromObject(caaO As CAA_ORDER)
+        Public Sub defineMeFromObject(caaO As CAA_INVENTORY)
             Me.saveTime = convertDataTime2String_DateNTime(Now)
 
 
@@ -110,12 +97,12 @@ Namespace CAA
             Me.originalFileName = caaO.originalFileName
 
 
-            lstORD = New List(Of [ORDER])
-            Dim o As New ORDER
+            lstINV = New List(Of INVENTORY)
+            Dim o As New INVENTORY
 
-            For ii As Integer = 0 To caaO.lstORD.Count - 1
-                o.defineMeFromObject(caaO.lstORD(ii))
-                Me.lstORD.Add(o)
+            For ii As Integer = 0 To caaO.lstINV.Count - 1
+                o.defineMeFromObject(caaO.lstINV(ii))
+                Me.lstINV.Add(o)
             Next
 
 
@@ -124,16 +111,16 @@ Namespace CAA
 
         Public Sub defineMeFromJSONFile(workFolder As String, filename As String)
 
-            Dim caaO As New CAA_ORDER
-            caaO = read_json2obj(workFolder + filename, New CAA_ORDER)
+            Dim caaO As New CAA_INVENTORY
+            caaO = read_json2obj(workFolder + filename, New CAA_INVENTORY)
             defineMeFromObject(caaO)
             Me.saveTime = convertDataTime2String_DateNTime(Now)
         End Sub
 
         Public Sub defineMeFromIntendedString(caaS As String)
-            Dim caaO As New CAA_ORDER
+            Dim caaO As New CAA_INVENTORY
             Try
-                caaO = convert_jsonString2Obj(caaS, New CAA_ORDER)
+                caaO = convert_jsonString2Obj(caaS, New CAA_INVENTORY)
                 defineMeFromObject(caaO)
             Catch ex As Exception
 
@@ -146,8 +133,6 @@ Namespace CAA
                                                 filename As String,
                                                 ARTCO As CAA_ARTCO) As Integer
             Me.saveTime = convertDataTime2String_DateNTime(Now)
-
-
             Me.workDir = workFolder
             Me.originalFileName = filename
 
@@ -167,70 +152,28 @@ Namespace CAA
         End Function
 
 
-        Public Function exportMe2CSV_CAAFormat() As Integer
-            If lstORD.Count = 0 Then Return 0
+        Public Function exportMe2CSV_original() As Integer
             If Me.workDir = "" Then Return 0
-            If Me.originalFileName = "" Then Return 0
-
-
-            Dim sp() As String = Split(originalFileName, ".")
-            Dim newfile As String = sp(0) + "_CAAFormat_" + attachDateTimeSurfix() + "." + sp(1)
-
-            Me.exportedFileName = newfile
-
-            Dim fw As New IO.StreamWriter(workDir + newfile)
-
-            Dim sl As String = ""
-
-
-            fw.WriteLine("ORDER_CAA_Format")
-            fw.WriteLine(",ART,MJ,SZ,CO,VE,DD")
-
-            For ii As Integer = 0 To lstORD.Count - 1
-                sl = ii.ToString + "," + lstORD(ii).exportMe2String
-                fw.Write(sl)
-            Next
-            fw.Flush()
-            fw.Close()
-            fw.Dispose()
-
-            Return 1
-        End Function
-
-
-        Public Function exportMe2CSV() As Integer
-            If lstORD.Count = 0 Then Return 0
-            If Me.workDir = "" Then Return 0
-            If Me.originalFileName = "" Then Return 0
-
-
-            Dim sp() As String = Split(originalFileName, ".")
-            Dim newfile As String = sp(0) + "_" + attachDateTimeSurfix() + "." + sp(1)
 
 
 
-            '? generate the lines
-            Dim lstART As New List(Of ORD_print)
+            Dim lstART As New List(Of INV_print)
 
-            For ii As Integer = 0 To Me.lstORD.Count - 1
-                Dim ord As ORDER = Me.lstORD(ii)
-                Dim ordp As New ORD_print
-                With ordp
-                    .ART = ord.SP.ART
-                    .CO = ord.SP.CO
-                    .MJ = ord.SP.MJ
-                    .DD = ord.DD
-                    .addSZZ(ord.SP.SZ, ord.VE)
-                End With
+            For ii As Integer = 0 To Me.lstINV.Count - 1
+                Dim inv As INVENTORY = Me.lstINV(ii)
+                Dim invp As New INV_print
+                invp.ART = inv.SP.ART
+                invp.MJ = inv.SP.MJ
+                invp.addSZZ(inv.SP.SZ, inv.VE)
 
                 If lstART.Count = 0 Then
-                    lstART.Add(ordp)
+                    lstART.Add(invp)
                 Else
 
                     Dim index_ART As Integer = -1
 
                     For jj As Integer = 0 To lstART.Count - 1
-                        If lstART(jj).checkARTMJ_True4Same(ordp.ART, ordp.MJ, ordp.CO, ordp.DD) Then
+                        If lstART(jj).checkARTMJ_True4Same(invp.ART, invp.MJ) Then
                             index_ART = jj
                             GoTo label_exit
                         End If
@@ -238,17 +181,20 @@ Namespace CAA
 label_exit:
                     If index_ART = -1 Then
                         'new item
-                        lstART.Add(ordp)
+                        lstART.Add(invp)
 
                     Else
-                        lstART(index_ART).addSZZ(ord.SP.SZ, ord.VE)
+                        lstART(index_ART).addSZZ(inv.SP.SZ, inv.VE)
                     End If
                 End If
 
             Next
 
 
-            'print to file
+            'print 
+
+            Dim sp() As String = Split(Me.originalFileName, ".")
+            Dim newfile As String = sp(0) + "_" + attachDateTimeSurfix() + "." + sp(1)
             Dim fi As String = workDir + newfile
 
             Me.exportedFileName = newfile
@@ -259,25 +205,14 @@ label_exit:
 
             sl = IO.Path.GetFileName(fi)
             fw.WriteLine(sl)
-            fw.WriteLine(",ART,date,mj,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12,12.5,13,13.5")
+            fw.WriteLine(",ART,mj,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12,12.5,13,13.5")
 
             For ii As Integer = 0 To lstART.Count - 1
 
                 sl = ii.ToString + "," +
                      lstART(ii).ART + "," +
-                     lstART(ii).DD + ","
-
-                If lstART(ii).MJ = 0 Then
-
-                    sl += "JR,"
-                ElseIf lstART(ii).MJ = 1 Then
-                    sl += "MS,"
-                Else
-                    sl += "MS,"
-                End If
-
-                'lstART(ii).MJ.ToString +"," +
-                sl +=     lstART(ii).SZZ.ToString_format
+                     lstART(ii).MJ.ToString + "," +
+                     lstART(ii).SZZ.ToString_format
                 fw.WriteLine(sl)
             Next
 
@@ -286,6 +221,44 @@ label_exit:
             fw.Close()
             fw.Dispose()
 
+
+
+            Return 1
+
+        End Function
+
+        Public Function exportMe2CSV() As Integer
+            If Me.workDir = "" Then Return 0
+
+            Return exportMe2CSV(workDir)
+
+        End Function
+        Public Function exportMe2CSV(workfolder As String) As Integer
+
+            Dim sp() As String = Split(Me.originalFileName, ".")
+            Dim newfile As String = sp(0) + "_CAA_format_" + attachDateTimeSurfix() + "." + sp(1)
+            Dim fi As String = workDir + newfile
+
+            Me.exportedFileName = newfile
+
+
+            'Dim fi As String = workDir + CAA_const.CAA_ORDER_Clearn_file + "_" + attachDateTimeSurfix() + ".csv"
+            Dim fw As New IO.StreamWriter(fi)
+
+            Dim sl As String = ""
+
+            sl = IO.Path.GetFileName(fi)
+            fw.WriteLine(sl)
+            fw.WriteLine(",ART, MJ,SZ,CO,VE,DD")
+
+            For ii As Integer = 0 To lstINV.Count - 1
+                sl = ii.ToString + "," + lstINV(ii).exportMe2String
+                fw.WriteLine(sl)
+            Next
+
+            fw.Flush()
+            fw.Close()
+            fw.Dispose()
 
             Return 1
         End Function
@@ -296,7 +269,7 @@ label_exit:
 
 #Region "ORDER Public Function"
 
-        Private Function FindORDERIndex(o As ORDER) As Integer
+        Private Function FindORDERIndex(o As INVENTORY) As Integer
 
         End Function
 
@@ -338,26 +311,26 @@ label_exit:
             'assign to order one by one
             ' check if there is anything duplicate
 
-            Me.lstORD = New List(Of [ORDER])
+            Me.lstINV = New List(Of INVENTORY)
 
 
             For line As Integer = 0 To lstORIGINAL.Count - 1
                 Dim sp() As String = Split(lstORIGINAL(line), ",")
 
                 Dim ART As String = sp(1)
-                Dim DD As String = sp(2)
+                'Dim DD As String = sp(2)
                 Dim MJ As Integer = 1
 
-                If sp(3).ToUpper = "MS" Then
+                If sp(2).ToUpper = "MS" Then
                     MJ = 1
                 End If
-                If sp(3).ToUpper = "JR" Then
+                If sp(2).ToUpper = "JR" Then
                     MJ = 0
                 End If
 
                 Dim lstSZ As New List(Of Integer)
                 For ii As Integer = 0 To 25
-                    lstSZ.Add(CInt(sp(ii + 4)))
+                    lstSZ.Add(CInt(sp(ii + 3)))
                 Next
 
                 ',ART,date,mj,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10,10.5,11,11.5,12,12.5,13,13.5
@@ -371,12 +344,12 @@ label_exit:
                         Dim CO As String = ARTCO.returnCOfromART(ART)
                         spec.defineMeFromValue(ART, SZ, MJ, CO)
 
-                        Dim ORD As New ORDER
-                        ORD.DD = DD
-                        ORD.SP.defineMeFromObject(spec)
-                        ORD.VE = lstSZ(iSZ)
+                        Dim INV As New INVENTORY
+                        'ORD.DD = DD
+                        INV.SP.defineMeFromObject(spec)
+                        INV.VE = lstSZ(iSZ)
 
-                        Me.lstORD.Add(ORD)
+                        Me.lstINV.Add(INV)
 
                     End If
                 Next
@@ -395,11 +368,11 @@ label_exit:
 
 
 
-    Public Class ORD_print
+
+
+    Public Class INV_print
         Public ART As String
         Public MJ As Integer
-        Public CO As String
-        Public DD As String
         Public SZZ As SZ_forPrint
 
 
@@ -408,14 +381,8 @@ label_exit:
         End Sub
 
 
-        Public Function checkARTMJ_True4Same(ART As String,
-                                               MJ As Integer,
-                                               CO As String,
-                                               DD As String) As Boolean
-            If Me.ART = ART And
-               Me.MJ = MJ And
-               Me.CO = CO And
-               Me.DD = DD Then
+        Public Function checkARTMJ_True4Same(ART As String, MJ As Integer) As Boolean
+            If Me.ART = ART And Me.MJ = MJ Then
                 Return True
             End If
             Return False
@@ -434,6 +401,7 @@ label_exit:
 
 
 
-
-
 End Namespace
+
+
+

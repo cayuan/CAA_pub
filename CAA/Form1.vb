@@ -135,8 +135,10 @@ Public Class Form1
 
     Public ORDER As CAA.CAA_ORDER
     Public ARTCO As CAA.CAA_ARTCO
-
-
+    Public INVENTORY As CAA.CAA_INVENTORY
+    Public OSARTMJ As CAA.CAA_OSARTMJ
+    Public OS_TOOLS As CAA.CAA_OSTOOLS
+    Public MACH As CAA.CAA_MachineStatus
 
 #Region "Delegation"
     Public Delegate Sub txt_Delegate(ByVal txt As String)
@@ -175,7 +177,9 @@ Public Class Form1
 
 
     Private Sub initializeMe()
+        Dim s As String = ""
 
+        s = "read profile..."
 
         ' use profile 
         USER = New CAA.CAA_USER
@@ -188,13 +192,22 @@ Public Class Form1
 
         USER.readMe()
 
+        s = "Profile setup done."
+        Addtxt_2_txtText(s)
 
         'WEI
         ReDim WEI(USER.WeightingFile_Title.Count - 1)
+        s = "Weighting reading..."
+        Addtxt_2_txtText(s)
         For ii As Integer = 0 To WEI.Count - 1
             WEI(ii) = New CAA_WT
             If USER.WeiFileExists_YesNo(ii) Then
                 WEI(ii).defineMefromFile(USER, ii)
+
+                s = USER.WeightingFile_Title(ii) +
+                    " is read from file:" +
+                    USER.WeightingFile_Name(ii) + "."
+                Addtxt_2_txtText(s)
             End If
         Next
 
@@ -206,14 +219,31 @@ Public Class Form1
         'ARTCO
         ARTCO = New CAA_ARTCO
 
+        'INVENTORY
+        INVENTORY = New CAA_INVENTORY
+
+        'OSARTMJ
+        OSARTMJ = New CAA_OSARTMJ
+
+        'OS_TOOLS
+        OS_TOOLS = New CAA_OSTOOLS
+
+        'Machine_Status
+        MACH = New CAA_MachineStatus
+
+        picGreen.Visible = False
+        picRed.Visible = True
+
         '---
         ' UI
         '---
         txtWorkDir.Text = USER.Current_Working_Folder
 
+        displayUSER()
 
 
 
+        Addtxt_2_txtText("")
 
     End Sub
 
@@ -225,6 +255,42 @@ Public Class Form1
         End If
 
     End Sub
+
+
+    Private Sub clearPB_CR()
+        dgvPriceBookWeighting.Columns.Clear()
+        dgvPriceBookWeighting.Enabled = True
+        Dim width As Double = dgvPriceBookWeighting.Width / (2) - 5
+        With dgvPriceBookWeighting
+            .ColumnCount = 2
+            .ColumnHeadersVisible = True
+            .RowHeadersWidth = 4
+
+            .Columns(0).Name = "ID"
+            .Columns(0).Width = width * 0.8
+
+            .Columns(1).Name = "Weighting"
+            .Columns(1).Width = width
+        End With
+
+        dgvCostReportWeighting.Columns.Clear()
+        dgvCostReportWeighting.Enabled = True
+
+        With dgvCostReportWeighting
+            .ColumnCount = 2
+            .ColumnHeadersVisible = True
+            .RowHeadersWidth = 4
+
+            .Columns(0).Name = "ID"
+            .Columns(0).Width = width * 0.8
+
+            .Columns(1).Name = "Weighting"
+            .Columns(1).Width = width
+        End With
+
+
+    End Sub
+
 
 
 #End Region
@@ -301,6 +367,59 @@ Public Class Form1
     End Function
 #End Region
 
+#Region "Weighting change"
+    Private Sub getUI2USER()
+        With USER
+
+
+
+            For ii As Integer = 0 To dgvPriceBookWeighting.Rows.Count - 2
+                If ii <= .PriceBookWeighting.Count - 1 Then
+                    .PriceBookWeighting(ii) = CDbl(Trim(dgvPriceBookWeighting.Rows(ii).Cells(1).Value))
+                End If
+            Next
+
+            For ii As Integer = 0 To dgvCostReportWeighting.Rows.Count - 2
+                If ii <= .CostReportWeighting.Count - 1 Then
+                    .CostReportWeighting(ii) = CDbl(Trim(dgvCostReportWeighting.Rows(ii).Cells(1).Value))
+                End If
+            Next
+        End With
+    End Sub
+
+    Private Sub displayUSER()
+        With USER
+
+            clearPB_CR()
+            For ii As Integer = 0 To .PriceBookWeighting.Count - 1
+                dgvPriceBookWeighting.Rows.Add()
+                dgvPriceBookWeighting.Rows(ii).Cells(0).Value = ii.ToString
+                dgvPriceBookWeighting.Rows(ii).Cells(1).Value = .PriceBookWeighting(ii).ToString
+            Next
+
+            For ii As Integer = 0 To .CostReportWeighting.Count - 1
+                dgvCostReportWeighting.Rows.Add()
+                dgvCostReportWeighting.Rows(ii).Cells(0).Value = ii.ToString
+                dgvCostReportWeighting.Rows(ii).Cells(1).Value = .CostReportWeighting(ii).ToString
+            Next
+
+        End With
+    End Sub
+    Private Sub cmdWeightingConfirmed_Click(sender As Object, e As EventArgs) Handles cmdWeightingConfirmed.Click
+        getUI2USER()
+        USER.writeMe()
+
+        Dim s As String
+        s = "New weightings are saved and activated."
+        Addtxt_2_txtText(s)
+
+    End Sub
+
+
+#End Region
+
+
+
 
 #Region "Form "
 
@@ -361,8 +480,31 @@ Public Class Form1
 
 #End Region
 
-#Region "ORDER"
+#Region "Initial Inputs"
 
+
+    Private Sub checkImportDone_ShowInpicGreeRed()
+
+        If ORDER.lstORD.Count > 0 And
+           ARTCO.lstARTCO.Count > 0 And
+           INVENTORY.lstINV.Count > 0 And
+           OSARTMJ.lstOSARTMJ.Count > 0 And
+           OS_TOOLS.lstOSTools.Count > 0 And
+           MACH.lstMACH.Count > 0 Then
+            picGreen.Visible = True
+            picRed.Visible = False
+        Else
+            picGreen.Visible = False
+            picRed.Visible = True
+        End If
+
+
+
+    End Sub
+
+
+
+#Region "ART-CO"
 
 
     Private Sub cmdARTCO_Click(sender As Object, e As EventArgs) Handles cmdARTCO.Click
@@ -374,6 +516,8 @@ Public Class Form1
         Dim fi As String = read_output_return_full_path(OpenFileType.csv,
                                                         USER.Current_Working_Folder,
                                                         "Open ORDER ORIGINAL CSV")
+        If Not (IO.File.Exists(fi)) Then Exit Sub
+
 
         If ARTCO.defineMEFromCSV(USER.Current_Working_Folder,
                                  IO.Path.GetFileName(fi)) = 1 Then
@@ -382,9 +526,33 @@ Public Class Form1
             Addtxt_2_txtText("")
         End If
 
+        checkImportDone_ShowInpicGreeRed()
+
+
+    End Sub
+    Private Sub ARTCOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ARTCOToolStripMenuItem.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If ARTCO.lstARTCO.Count = 0 Then
+            MsgBox("Read ART-CO first. ")
+            Exit Sub
+        End If
+
+
+
+        If ARTCO.exportME2CSV() = 1 Then
+            Addtxt_2_txtText("ARTCO exported to file: " + ARTCO.exportedFileName + ".")
+            Addtxt_2_txtText("")
+        End If
     End Sub
 
 
+#End Region
+
+#Region "ORDER_Original"
 
 
     Private Sub cmdGetOrder_Click(sender As Object, e As EventArgs) Handles cmdGetOrder.Click
@@ -401,6 +569,8 @@ Public Class Form1
         Dim fi As String = read_output_return_full_path(OpenFileType.csv,
                                                         USER.Current_Working_Folder,
                                                         "Open ORDER ORIGINAL CSV")
+        If Not (IO.File.Exists(fi)) Then Exit Sub
+
         If ORDER.defineMeFromORIGINALCSV(USER.Current_Working_Folder,
                                       IO.Path.GetFileName(fi),
                                       ARTCO) = 1 Then
@@ -408,8 +578,363 @@ Public Class Form1
             Addtxt_2_txtText("ORDER count= " + ORDER.lstORD.Count.ToString + ".")
             Addtxt_2_txtText("")
         End If
+        checkImportDone_ShowInpicGreeRed()
+    End Sub
+    Private Sub ORDERORIGINALToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ORDERORIGINALToolStripMenuItem.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If ORDER.lstORD.Count = 0 Then
+            MsgBox("Read order first. ")
+            Exit Sub
+        End If
+
+
+
+        If ORDER.exportMe2CSV() = 1 Then
+            Addtxt_2_txtText("ORDER exported to file: " + ORDER.exportedFileName + ".")
+            Addtxt_2_txtText("")
+        End If
+    End Sub
+
+    Private Sub ORDERORIGINALCAAFormatToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ORDERORIGINALCAAFormatToolStripMenuItem.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If ORDER.lstORD.Count = 0 Then
+            MsgBox("Read order first. ")
+            Exit Sub
+        End If
+
+
+
+        If ORDER.exportMe2CSV_CAAFormat() = 1 Then
+            Addtxt_2_txtText("ORDER exported to file: " + ORDER.exportedFileName + ".")
+            Addtxt_2_txtText("")
+        End If
+    End Sub
+
+
+
+#End Region
+
+
+#Region "Inventory"
+
+
+    Private Sub cmdInventory_Click(sender As Object, e As EventArgs) Handles cmdInventory.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If ARTCO.lstARTCO.Count = 0 Then
+            MsgBox("Define ART-CO before start. ")
+            Exit Sub
+        End If
+
+        Dim fi As String = read_output_return_full_path(OpenFileType.csv,
+                                                        USER.Current_Working_Folder,
+                                                        "INVENTORY CSV")
+        If Not (IO.File.Exists(fi)) Then Exit Sub
+
+        If INVENTORY.defineMeFromORIGINALCSV(USER.Current_Working_Folder,
+                                      IO.Path.GetFileName(fi),
+                                      ARTCO) = 1 Then
+            Addtxt_2_txtText("INVENTORY read from file: " + IO.Path.GetFileName(fi) + ".")
+            Addtxt_2_txtText("INVENTORY count= " + INVENTORY.lstINV.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+        checkImportDone_ShowInpicGreeRed()
+    End Sub
+    Private Sub INVENTORYToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles INVENTORYToolStripMenuItem.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If INVENTORY.lstINV.Count = 0 Then
+            MsgBox("Read inventory first. ")
+            Exit Sub
+        End If
+
+
+
+        If INVENTORY.exportMe2CSV_Original() = 1 Then
+            Addtxt_2_txtText("INVENTORY exported to file: " + INVENTORY.exportedFileName + ".")
+            Addtxt_2_txtText("")
+        End If
+    End Sub
+
+    Private Sub INVENTORYCAAFormatToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles INVENTORYCAAFormatToolStripMenuItem.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If INVENTORY.lstINV.Count = 0 Then
+            MsgBox("Read inventory first. ")
+            Exit Sub
+        End If
+
+
+
+        If INVENTORY.exportMe2CSV() = 1 Then
+            Addtxt_2_txtText("INVENTORY exported to file: " + INVENTORY.exportedFileName + ".")
+            Addtxt_2_txtText("")
+        End If
+    End Sub
+
+
+#End Region
+
+#Region "Machine Status"
+
+
+    Private Sub cmdMachineStatus_pre_Click(sender As Object, e As EventArgs) Handles cmdMachineStatus_pre.Click
+
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+
+        Dim fi As String = read_output_return_full_path(OpenFileType.csv,
+                                                        USER.Current_Working_Folder,
+                                                        "Machine Status CSV")
+        If Not (IO.File.Exists(fi)) Then Exit Sub
+
+        If MACH.defineMeFromCSV(USER.Current_Working_Folder,
+                                      IO.Path.GetFileName(fi)) = 1 Then
+            Addtxt_2_txtText("Machine Status read from file: " + IO.Path.GetFileName(fi) + ".")
+            Addtxt_2_txtText("Machine Status count= " + MACH.lstMACH.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+        checkImportDone_ShowInpicGreeRed()
 
     End Sub
+    Private Sub MACHToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MACHToolStripMenuItem.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If MACH.lstMACH.Count = 0 Then
+            MsgBox("Read inventory first. ")
+            Exit Sub
+        End If
+
+
+
+        If MACH.exportMe2CSV() = 1 Then
+            Addtxt_2_txtText("mach exported to file: " + MACH.exportedFileName + ".")
+            Addtxt_2_txtText("")
+        End If
+    End Sub
+
+#End Region
+
+
+
+
+#Region "OS_Tools"
+
+
+    Private Sub cmdSO_ToolStatus_Click(sender As Object, e As EventArgs) Handles cmdSO_ToolStatus.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        Dim fi As String = read_output_return_full_path(OpenFileType.csv,
+                                                        USER.Current_Working_Folder,
+                                                        "4 OS_TOOLS")
+        If Not (IO.File.Exists(fi)) Then Exit Sub
+
+
+        If OS_TOOLS.defineMeFromCSV(USER.Current_Working_Folder,
+                                 IO.Path.GetFileName(fi)) = 1 Then
+            Addtxt_2_txtText("OS-TOOLS read from file: " + IO.Path.GetFileName(fi) + ".")
+            Addtxt_2_txtText("OS-TOOLS count= " + OS_TOOLS.lstOSTools.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+        checkImportDone_ShowInpicGreeRed()
+
+    End Sub
+    Private Sub OSToolsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OSToolsToolStripMenuItem.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If OS_TOOLS.lstOSTools.Count = 0 Then
+            MsgBox("Read OS-TOOLs first. ")
+            Exit Sub
+        End If
+
+
+
+        If OS_TOOLS.exportMe2CSV() = 1 Then
+            Addtxt_2_txtText("OS_TOOLS exported to file: " + OS_TOOLS.exportedFileName + ".")
+            Addtxt_2_txtText("")
+        End If
+
+
+    End Sub
+
+
+#End Region
+
+
+
+
+#Region "OS-ART-MJ"
+
+
+    Private Sub cmdOSARTMJ_Click(sender As Object, e As EventArgs) Handles cmdOSARTMJ.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+
+
+        Dim fi As String = read_output_return_full_path(OpenFileType.csv,
+                                                        USER.Current_Working_Folder,
+                                                        "2_OS-ART-MJ CSV")
+        If Not (IO.File.Exists(fi)) Then Exit Sub
+
+        If OSARTMJ.defineMeFromORIGINALCSV(USER.Current_Working_Folder,
+                                      IO.Path.GetFileName(fi)) = 1 Then
+            Addtxt_2_txtText("OSARTMJ read from file: " + IO.Path.GetFileName(fi) + ".")
+            Addtxt_2_txtText("OSARTMJ count= " + OSARTMJ.lstOSARTMJ.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+        checkImportDone_ShowInpicGreeRed()
+    End Sub
+    Private Sub OSARTMJToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles OSARTMJToolStripMenuItem.Click
+        If txtWorkDir.Text = "" Then
+            MsgBox("Assgin the WorkDir first. ")
+            Exit Sub
+        End If
+
+        If OSARTMJ.lstOSARTMJ.Count = 0 Then
+            MsgBox("Read OS-ART-MJ first. ")
+            Exit Sub
+        End If
+
+
+
+        If OSARTMJ.exportMe2CSV() = 1 Then
+            Addtxt_2_txtText("OSARTMJ exported to file: " + OSARTMJ.exportedFileName + ".")
+            Addtxt_2_txtText("")
+        End If
+
+    End Sub
+    Private Sub cmdSuper_Click(sender As Object, e As EventArgs) Handles cmdSuper.Click
+
+        '? @@num:1 : ARTCO
+        Dim fi As String
+
+        fi = "1_ART_COLOR.csv"
+        If ARTCO.defineMEFromCSV(USER.Current_Working_Folder,
+                                 "1_ART_COLOR.csv") = 1 Then
+            Addtxt_2_txtText("ART-CO read from file: " + fi + ".")
+            Addtxt_2_txtText("ART-CO count= " + ARTCO.lstARTCO.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+
+        '? @@num:2 : OS-ART-MJ
+        fi = "2_OS_ART_MJ.csv"
+        If OSARTMJ.defineMeFromORIGINALCSV(USER.Current_Working_Folder,
+                                     fi) = 1 Then
+            Addtxt_2_txtText("OSARTMJ read from file: " + fi + ".")
+            Addtxt_2_txtText("OSARTMJ count= " + OSARTMJ.lstOSARTMJ.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+
+        '? @@num:3 : OS_TOOLS
+        fi = "3_OS_Tools.csv"
+        If OS_TOOLS.defineMeFromCSV(USER.Current_Working_Folder,
+                                 fi) = 1 Then
+            Addtxt_2_txtText("OS-TOOLS read from file: " + fi + ".")
+            Addtxt_2_txtText("OS-TOOLS count= " + OS_TOOLS.lstOSTools.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+
+
+        '? @@num:4 : INVENTORY
+        fi = "4_INVENTORY.csv"
+        If INVENTORY.defineMeFromORIGINALCSV(USER.Current_Working_Folder,
+                                     fi,
+                                     ARTCO) = 1 Then
+            Addtxt_2_txtText("INVENTORY read from file: " + fi + ".")
+            Addtxt_2_txtText("INVENTORY count= " + INVENTORY.lstINV.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+
+        '? @@num:5 : MACH
+        fi = "5_MACH.csv"
+        If MACH.defineMeFromCSV(USER.Current_Working_Folder,
+                                     fi) = 1 Then
+            Addtxt_2_txtText("Machine Status read from file: " + fi + ".")
+            Addtxt_2_txtText("Machine Status count= " + MACH.lstMACH.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+
+        '? @@num:6 : ORDER
+        fi = "6_ORDER_ORIGINAL.csv"
+        If ORDER.defineMeFromORIGINALCSV(USER.Current_Working_Folder,
+                                     fi,
+                                     ARTCO) = 1 Then
+            Addtxt_2_txtText("ORDER read from file: " + fi + ".")
+            Addtxt_2_txtText("ORDER count= " + ORDER.lstORD.Count.ToString + ".")
+            Addtxt_2_txtText("")
+        End If
+
+
+
+        checkImportDone_ShowInpicGreeRed()
+
+
+
+    End Sub
+
+
+
+#End Region
+
+#End Region
+#Region "Initialization after data input"
+    Private Sub cmdInitialization_Click(sender As Object, e As EventArgs) Handles cmdInitialization.Click
+
+        '? @@num:1  Register the os in the MACH 2 the OS_Tools
+
+        If picRed.Visible = True Then Exit Sub
+
+        For ii As Integer = 0 To MACH.lstMACH.Count - 1
+            Dim ma As MACH = MACH.lstMACH(ii)
+            If OS_TOOLS.assignToolStatus(ma.OS, ma.SN1, ma.SN2, MachineToolStatus.Available_Plan_inUse) = 1 Then
+                Dim s As String = ""
+                s += "LINE " + ii.ToString + ","
+                s += "OS=" + ma.OS + ","
+                s += "SN1=" + ma.SN1 + ","
+                s += "SN2=" + ma.SN2
+                s += vbNewLine + "Set to Available Plan In USE."
+                Addtxt_2_txtText(s)
+            End If
+        Next
+
+
+
+    End Sub
+
+
+
 #End Region
 
 
@@ -444,8 +969,10 @@ Public Class Form1
 
 
 
-
 #End Region
+
+
+
 
 
 

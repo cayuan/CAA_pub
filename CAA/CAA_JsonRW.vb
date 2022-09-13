@@ -79,6 +79,11 @@ Namespace CAA
                 Case GetType(CAA.CAA_ARTCO)
                     Return JsonConvert.DeserializeObject(Of CAA.CAA_ARTCO)(outS)
 
+
+                '? CAA.CAA_INVENTORY
+                Case GetType(CAA.CAA_INVENTORY)
+                    Return JsonConvert.DeserializeObject(Of CAA.CAA_INVENTORY)(outS)
+
                     '? Covariance general
                     'Case GetType(CALA_Covariance_output_format)
                     '    Return JsonConvert.DeserializeObject(Of CALA_Covariance_output_format)(outS)

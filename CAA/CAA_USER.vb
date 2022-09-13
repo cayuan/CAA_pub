@@ -15,7 +15,8 @@ Namespace CAA
         Public WeightingFile_Title() As String
         Public WeightingFile_Name() As String
         Public WeightingFile_Type() As CAA_Weighting_Format
-
+        Public PriceBookWeighting() As Double
+        Public CostReportWeighting() As Double
 
         Sub New()
             Call initializeMe()
@@ -55,6 +56,9 @@ Namespace CAA
             WeightingFile_Type(4) = CAA.CAA_Weighting_Format.two
 
 
+            ReDim PriceBookWeighting(2)
+            ReDim CostReportWeighting(2)
+
         End Sub
 
 
@@ -65,6 +69,13 @@ Namespace CAA
                 Me.WeightingFile_Name(ii) = u.WeightingFile_Name(ii)
                 Me.WeightingFile_Type(ii) = u.WeightingFile_Type(ii)
                 Me.WeightingFile_Title(ii) = u.WeightingFile_Title(ii)
+            Next
+
+            For ii As Integer = 0 To PriceBookWeighting.Count - 1
+                Me.PriceBookWeighting(ii) = u.PriceBookWeighting(ii)
+            Next
+            For ii As Integer = 0 To CostReportWeighting.Count - 1
+                Me.CostReportWeighting(ii) = u.CostReportWeighting(ii)
             Next
 
         End Sub
@@ -92,6 +103,12 @@ Namespace CAA
             For ii As Integer = 0 To WeightingFile_Type.Count - 1
                 WeightingFile_Name(ii) = WeightingFile_Title(ii) + ".csv"
             Next
+
+            PriceBookWeighting(0) = 0.5 'for DD
+            PriceBookWeighting(1) = 0.2 'for machine status
+            PriceBookWeighting(2) = 0.3 'for inventory
+
+            CostReportWeighting(0) = 0.5 '???
 
             Return Me
         End Function
