@@ -249,7 +249,7 @@ label_exit:
 
             sl = IO.Path.GetFileName(fi)
             fw.WriteLine(sl)
-            fw.WriteLine(",ART, MJ,SZ,CO,VE,DD")
+            fw.WriteLine(",ART, MJ,SZ,CO,VE")
 
             For ii As Integer = 0 To lstINV.Count - 1
                 sl = ii.ToString + "," + lstINV(ii).exportMe2String

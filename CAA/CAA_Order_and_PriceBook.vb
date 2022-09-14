@@ -188,7 +188,7 @@ Namespace CAA
 
             For ii As Integer = 0 To lstORD.Count - 1
                 sl = ii.ToString + "," + lstORD(ii).exportMe2String
-                fw.Write(sl)
+                fw.WriteLine(sl)
             Next
             fw.Flush()
             fw.Close()
@@ -277,7 +277,8 @@ label_exit:
                 End If
 
                 'lstART(ii).MJ.ToString +"," +
-                sl +=     lstART(ii).SZZ.ToString_format
+                sl += lstART(ii).SZZ.ToString_format
+
                 fw.WriteLine(sl)
             Next
 

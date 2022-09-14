@@ -66,8 +66,12 @@ Namespace CAA
             InMaintainence
             Down
             Not_Available
-            Available_Plan_free
-            Available_Plan_inUse
+            Available_Plan_free = 100
+            Available_Plan_inUse = 150
+            Available_ToolChange1 = 200
+            Available_ToolChange2 = 250
+            Available_ToolChange3 = 300
+            Available_InProduction = 400
         End Enum
 
     End Module
