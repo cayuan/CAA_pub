@@ -1,0 +1,28 @@
+[
+{
+  "USER_file_folder": "C:\\Users\\cayuan\\AppData\\Local\\CAA\\",
+  "Base_Data_Folder": "C:\\Users\\cayuan\\AppData\\Local\\CAA\\basedir\\",
+  "Current_Working_Folder": "C:\\Users\\cayuan\\AppData\\Local\\CAA\\workdir\\",
+  "WeightingFile_Title": [
+    "DueDay",
+    "MachineStatus_price",
+    "InventoryWei",
+    "MachineStatus_cost",
+    "PreviousEarning"
+  ],
+  "WeightingFile_Name": [
+    "DueDay.csv",
+    "MachineStatus_price.csv",
+    "InventoryWei.csv",
+    "MachineStatus_cost.csv",
+    "PreviousEarning.csv"
+  ],
+  "WeightingFile_Type": [
+    1,
+    2,
+    1,
+    2,
+    1
+  ]
+}
+]
